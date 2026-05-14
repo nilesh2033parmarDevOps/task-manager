@@ -1,0 +1,23 @@
+name: Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+
+        with:
+          host: 187.127.135.184
+          username: root
+          key: ${{ secrets.SSH_KEY_PRIVATE }}
+
+          script: |
+            cd ~/task-manager
+            ./deploy2.sh
